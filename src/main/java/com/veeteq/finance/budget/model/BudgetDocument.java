@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
 
 @Entity
 @Table(name = "documents", uniqueConstraints = @UniqueConstraint(columnNames = "docu_id"))
@@ -48,8 +49,10 @@ public abstract class BudgetDocument<T> extends BaseEntity<T> {
   @Column(name = "curr_rate_am", columnDefinition = "number(10, 6) default 1 not null", nullable = false)
   private BigDecimal currencyRate = BigDecimal.ONE;
 
-  public BudgetDocument() {
-  }
+  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
+  List<BudgetDocumentItem> documentItems;
+  
+  public BudgetDocument() {}
 
   protected BudgetDocument(Builder<?> builder) {
     this.id = builder.id;
