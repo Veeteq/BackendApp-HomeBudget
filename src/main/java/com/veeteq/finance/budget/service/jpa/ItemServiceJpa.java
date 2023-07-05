@@ -22,6 +22,7 @@ public class ItemServiceJpa implements ItemService {
   private static final Logger LOG = LoggerFactory.getLogger(ItemServiceJpa.class);
 
   private final ItemRepository itemRepository;
+  private final ItemMapper mapper = new ItemMapper();
 
   @Autowired
   public ItemServiceJpa(ItemRepository itemRepository) {
@@ -43,8 +44,6 @@ public class ItemServiceJpa implements ItemService {
   public PageResponse<ItemDTO> findAll(PageRequest pageRequest) {
     LOG.info("getSummary: page=" + pageRequest.getPageNumber() + ", size=" + pageRequest.getPageSize() + ", dir=" + pageRequest.getSort().toString());
 
-    ItemMapper mapper = new ItemMapper();
-
     Page<Item> page = itemRepository.findAllWithCategory(pageRequest);
     List<ItemDTO> content = page.getContent()
             .stream()
@@ -60,5 +59,16 @@ public class ItemServiceJpa implements ItemService {
             .setLast(page.isLast());
 
     return response;
+  }
+
+  @Override
+  public List<ItemDTO> findByName(String pattern) {
+    LOG.info("Searching for items with pattern: " + pattern);
+
+    return itemRepository
+            .findByNameContainingIgnoreCase(pattern)
+            .stream()
+            .map(mapper::toDto)
+            .collect(Collectors.toList());
   }
 }

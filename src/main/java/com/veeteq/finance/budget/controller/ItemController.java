@@ -1,5 +1,7 @@
 package com.veeteq.finance.budget.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,5 +48,13 @@ public class ItemController {
     PageResponse<ItemDTO> response = itemService.findAll(pageRequest);
 
     return ResponseEntity.ok(response);
+  }
+
+  @GetMapping(path = "/{pattern}", produces = {MediaType.APPLICATION_JSON_VALUE})
+  public ResponseEntity<List<ItemDTO>> getProductsByName(@PathVariable(name = "pattern", required = true) String pattern) {
+    LOG.info("Processing search request for items with name: " + pattern);
+
+    List<ItemDTO> result = this.itemService.findByName(pattern);
+    return ResponseEntity.ok(result);
   }
 }

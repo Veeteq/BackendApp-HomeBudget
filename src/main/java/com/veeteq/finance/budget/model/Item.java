@@ -12,6 +12,7 @@ import javax.persistence.*;
 @GenericGenerator(name = "default_seq",
                   strategy = "com.veeteq.finance.budget.model.BudgetSequenceGenerator",
                   parameters = {@Parameter(name="sequence_name", value="item_seq")})
+@NamedEntityGraph(name = "item-category", attributeNodes = @NamedAttributeNode("category"))
 public class Item extends NamedEntity<Item> {
   private static final long serialVersionUID = 1L;
     
