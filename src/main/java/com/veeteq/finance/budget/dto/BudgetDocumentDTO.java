@@ -21,14 +21,15 @@ public class BudgetDocumentDTO {
     
     @NotEmpty
     private String documentTitle;
-    
+
+    @NotNull
     private PaymentMethod paymentMethod;
-    
-    private String invoiceNumber;
-    
+
     @NotNull
     private Long accountId;
-    
+
+    private String invoiceNumber;
+
     private Long counterpartyId;
     
     private Currency currency;
