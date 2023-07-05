@@ -19,10 +19,12 @@ public class BudgetDocumentController {
     private static final Logger LOG = LoggerFactory.getLogger(BudgetDocumentController.class);
 
     private final BudgetDocumentService budgetDocumentService;
+    private final BankDocumentMngrAPIClient bankDocumentMngrClient;
 
     @Autowired
-    public BudgetDocumentController(BudgetDocumentService budgetDocumentService) {
+    public BudgetDocumentController(BudgetDocumentService budgetDocumentService, BankDocumentMngrAPIClient bankDocumentMngrClient) {
         this.budgetDocumentService = budgetDocumentService;
+        this.bankDocumentMngrClient = bankDocumentMngrClient;
     }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,4 +56,14 @@ public class BudgetDocumentController {
                 .build();
     }
 
+    @GetMapping(path = "/bankstatements")
+    public ResponseEntity<List<BankStatementDetailDTO>> getBankStatementsByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+        LOG.info("Requesting bank statement details from BankDocument Manager for: " + date);
+
+        List<BankStatementDetailDTO> response = bankDocumentMngrClient.getBankStatementDetailsByDate(date);
+        return ResponseEntity.ok(response);
+    }
 }
