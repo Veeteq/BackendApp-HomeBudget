@@ -1,14 +1,20 @@
 package com.veeteq.finance.budget.controller;
 
+import com.veeteq.finance.budget.dto.BankStatementDetailDTO;
 import com.veeteq.finance.budget.dto.BudgetDocumentDTO;
+import com.veeteq.finance.budget.integration.bankdocumentmngr.BankDocumentMngrAPIClient;
 import com.veeteq.finance.budget.service.BudgetDocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.Valid;
 
