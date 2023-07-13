@@ -1,17 +1,25 @@
 package com.veeteq.finance.budget.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-//@MappedSuperclass
-//@Table(name = "document_items", uniqueConstraints = @UniqueConstraint(columnNames = "ditm_id"))
-public class BudgetDocumentItem extends BaseEntity<BudgetDocumentItem> {
+@MappedSuperclass
+public abstract class BudgetDocumentItem extends BaseEntity<BudgetDocumentItem> {
   private static final long serialVersionUID = 1L;
-  
-  @Id
-  @Column(name = "ditm_id")
-  private Long id;
-    
+
+  @Column(name = "oper_dt", nullable = false)
+  protected LocalDate operationDate;
+
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "docu_id", referencedColumnName = "docu_id")
-  private BudgetDocument document;
+  @JoinColumn(name = "user_id", nullable = false)
+  protected Account account;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "item_id", nullable = false)
+  protected Item item;
+
+  protected BigDecimal price;
+
+  protected String comment;
 }
