@@ -55,6 +55,7 @@ public class BudgetDataLoader implements CommandLineRunner {
 
     private void loadCategories(boolean toBeLoaded) {
         if (toBeLoaded) {
+            LOG.info("Start loading categories.....");
             Path path = baseDirectory.resolve("categories.txt");
             getStreamFromFile(path).forEach(line -> {
                 String[] values = line.split("\t");
@@ -65,12 +66,13 @@ public class BudgetDataLoader implements CommandLineRunner {
                         .build();
                 categoryService.save(category);
             });
-            LOG.debug("Categories loaded...");
+            LOG.info("{} Categories loaded...", categoryService.count());
         }
     }
 
     private void loadItems(boolean toBeLoaded) {
         if (toBeLoaded) {
+            LOG.info("Start loading items.....");
             Path path = baseDirectory.resolve("items.txt");
             getStreamFromFile(path).forEach(line -> {
                 String[] values = line.split("\t");
@@ -81,12 +83,13 @@ public class BudgetDataLoader implements CommandLineRunner {
                         .build();
                 itemService.save(item);
             });
-            LOG.debug("Items loaded...");
+            LOG.info("{} Items loaded...", itemService.count());
         }
     }
 
     private void loadUsers(boolean toBeLoaded) {
         if (toBeLoaded) {
+            LOG.info("Start loading accounts.....");
             Path path = baseDirectory.resolve("users.txt");
             getStreamFromFile(path).forEach(line -> {
                 String[] values = line.split("\t");
@@ -96,7 +99,7 @@ public class BudgetDataLoader implements CommandLineRunner {
                         .build();
                 userService.save(user);
             });
-            LOG.debug("Users loaded...");
+            LOG.info("{} Accounts loaded...", userService.count());
         }
     }
 /*

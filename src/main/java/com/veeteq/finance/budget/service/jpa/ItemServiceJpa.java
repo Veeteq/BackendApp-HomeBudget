@@ -40,6 +40,11 @@ public class ItemServiceJpa implements ItemService {
   }
 
   @Override
+  public long count() {
+    return itemRepository.count();
+  }
+
+  @Override
   @Transactional
   public PageResponse<ItemDTO> findAll(PageRequest pageRequest) {
     LOG.info("getSummary: page=" + pageRequest.getPageNumber() + ", size=" + pageRequest.getPageSize() + ", dir=" + pageRequest.getSort().toString());
