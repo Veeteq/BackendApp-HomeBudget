@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.veeteq.finance.budget.model.builder.InvoiceBuilder;
+
 @Entity
 @DiscriminatorValue("INVOICE")
 public final class Invoice extends BudgetDocument<Invoice> {
@@ -17,40 +19,14 @@ public final class Invoice extends BudgetDocument<Invoice> {
 
   public Invoice() {}
 
-  public Invoice(Builder builder) {
+  public Invoice(InvoiceBuilder builder) {
     super(builder);
-    this.counterpartyId = builder.counterpartyId;
-    this.invoiceNumber = builder.invoiceNumber;
+    this.counterpartyId = builder.getCounterpartyId();
+    this.invoiceNumber = builder.getInvoiceNumber();
   }
 
-  public static Builder builder() {
-    return new Builder();
+  public static InvoiceBuilder builder() {
+    return new InvoiceBuilder();
   }
 
-  public static class Builder extends BudgetDocument.Builder<Builder> {
-    private Long counterpartyId;
-    private String invoiceNumber;
-
-    private Builder() {}
-
-    public Builder setCounterpartyId(Long counterpartyId) {
-      this.counterpartyId = counterpartyId;
-      return self();
-    }
-
-    public Builder setInvoiceNumber(String invoiceNumber) {
-      this.invoiceNumber = invoiceNumber;
-      return self();
-    }
-
-    @Override
-    public Invoice build() {
-      return new Invoice(this);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
-    }
-  }
 }
