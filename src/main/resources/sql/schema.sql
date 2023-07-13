@@ -31,6 +31,7 @@ create table documents (
   docu_dt      date not null,
   acco_id      bigint not null,
   docu_type_tx varchar(10) not null,
+  docu_name_tx varchar(100),
   curr_cd      varchar(4),
   curr_rate_am decimal(10,6) default 1,
   paym_meth_tx varchar(15),

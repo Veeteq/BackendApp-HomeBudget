@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.veeteq.finance.budget.model.builder.NoteBuilder;
+
 @Entity
 @DiscriminatorValue("NOTE")
 public final class Note extends BudgetDocument<Note> {
@@ -14,33 +16,13 @@ public final class Note extends BudgetDocument<Note> {
 
   public Note() {}
 
-  public Note(Builder builder) {
+  public Note(NoteBuilder builder) {
     super(builder);
-    this.counterpartyId = builder.counterpartyId;
+    this.counterpartyId = builder.getCounterpartyId();
   }
 
-  public static Builder builder() {
-    return new Builder();
+  public static NoteBuilder builder() {
+    return new NoteBuilder();
   }
 
-  public static class Builder extends BudgetDocument.Builder<Builder> {
-    private Long counterpartyId;
-
-    private Builder() {}
-
-    public Builder setCounterpartyId(Long counterpartyId) {
-      this.counterpartyId = counterpartyId;
-      return self();
-    }
-
-    @Override
-    public Note build() {
-      return new Note(this);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
-    }
-  }
 }

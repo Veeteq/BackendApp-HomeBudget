@@ -31,13 +31,14 @@ public class BudgetDocumentMapper<T> {
     return entity;
   }
 
-  private Bill createBill(BudgetDocumentDTO dto) {
+  private BudgetDocument<Bill> createBill(BudgetDocumentDTO dto) {
     Long accountId = dto.getAccountId();
     Account account = accountRepository.getReferenceById(accountId);
 
     Bill bill = Bill.builder()
             .withId(dto.getId())
             .withDocumentDate(dto.getDocumentDate())
+            .withDocumentTitle(dto.getDocumentTitle())
             .withAccount(account)
             .withPaymentMethod(dto.getPaymentMethod())
             .withCurrency(dto.getCurrency())
@@ -46,7 +47,7 @@ public class BudgetDocumentMapper<T> {
     return bill;
   }
 
-  private Note createNote(BudgetDocumentDTO dto) {
+  private BudgetDocument<Note> createNote(BudgetDocumentDTO dto) {
     Long accountId = dto.getAccountId();
     Account account = accountRepository.getReferenceById(accountId);
 
@@ -57,13 +58,13 @@ public class BudgetDocumentMapper<T> {
             .withPaymentMethod(dto.getPaymentMethod())
             .withCurrency(dto.getCurrency())
             .withCurrencyRate(dto.getExchangeRate())
-            .setCounterpartyId(dto.getCounterpartyId())
+            .withCounterpartyId(dto.getCounterpartyId())
             .build();
 
     return note;
   }
 
-  private Invoice createInvoice(BudgetDocumentDTO dto) {
+  private BudgetDocument<Invoice> createInvoice(BudgetDocumentDTO dto) {
     Long accountId = dto.getAccountId();
     Account account = accountRepository.getReferenceById(accountId);
 
@@ -74,8 +75,8 @@ public class BudgetDocumentMapper<T> {
             .withPaymentMethod(dto.getPaymentMethod())
             .withCurrency(dto.getCurrency())
             .withCurrencyRate(dto.getExchangeRate())
-            .setCounterpartyId(dto.getCounterpartyId())
-            .setInvoiceNumber(dto.getInvoiceNumber())
+            .withCounterpartyId(dto.getCounterpartyId())
+            .withInvoiceNumber(dto.getInvoiceNumber())
             .build();
     return invoice;
   }

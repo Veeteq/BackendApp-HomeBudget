@@ -3,6 +3,8 @@ package com.veeteq.finance.budget.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import com.veeteq.finance.budget.model.builder.BillBuilder;
+
 @Entity
 @DiscriminatorValue("BILL")
 public final class Bill extends BudgetDocument<Bill> {
@@ -10,26 +12,12 @@ public final class Bill extends BudgetDocument<Bill> {
 
   public Bill() {}
 
-  public Bill(Builder builder) {
-    super(builder);
+  public Bill(BillBuilder builder) {
+      super(builder);
   }
 
-  public static Builder builder() {
-    return new Builder();
+  public static BillBuilder builder() {
+    return new BillBuilder();
   }
 
-  public static class Builder extends BudgetDocument.Builder<Builder> {
-
-    private Builder() {}
-
-    @Override
-    public Bill build() {
-      return new Bill(this);
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
-    }
-  }
 }

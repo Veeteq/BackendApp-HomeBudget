@@ -1,14 +1,31 @@
 package com.veeteq.finance.budget.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Currency;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Currency;
-import java.util.List;
+import com.veeteq.finance.budget.model.builder.BudgetDocumentBuilder;
 
 @Entity
 @Table(name = "documents", uniqueConstraints = @UniqueConstraint(columnNames = "docu_id"))
@@ -19,7 +36,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
                      name = "docu_type_tx")
-public abstract class BudgetDocument<T> extends BaseEntity<T> {
+public abstract class BudgetDocument<T> extends BaseEntity<BudgetDocument<T>> {
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -35,6 +52,9 @@ public abstract class BudgetDocument<T> extends BaseEntity<T> {
   @Column(name="docu_type_tx", insertable = false, updatable = false)
   private DocumentType documentType;
 
+  @Column(name = "docu_name_tx")
+  private String documentTitle;
+
   @ManyToOne
   @JoinColumn(name = "acco_id")
   private Account account;
@@ -49,19 +69,17 @@ public abstract class BudgetDocument<T> extends BaseEntity<T> {
   @Column(name = "curr_rate_am", columnDefinition = "number(10, 6) default 1 not null", nullable = false)
   private BigDecimal currencyRate = BigDecimal.ONE;
 
-  @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
-  List<BudgetDocumentItem> documentItems;
-  
   public BudgetDocument() {}
 
-  protected BudgetDocument(Builder<?> builder) {
-    this.id = builder.id;
-    this.documentDate = builder.documentDate;
-    this.documentType = builder.documentType;
-    this.account = builder.account;
-    this.paymentMethod = builder.paymentMethod;
-    this.currency = builder.currency;
-    this.currencyRate = builder.currencyRate;
+  protected BudgetDocument(BudgetDocumentBuilder builder) {
+      this.id = builder.getId();
+      this.documentDate = builder.getDocumentDate();
+      this.documentType = builder.getDocumentType();
+      this.documentTitle = builder.getDocumentTitle();
+      this.account = builder.getAccount();
+      this.paymentMethod = builder.getPaymentMethod();
+      this.currency = builder.getCurrency();
+      this.currencyRate = builder.getCurrencyRate();
   }
 
   public abstract static class Builder<T extends Builder<T>> {

@@ -3,6 +3,7 @@ package com.veeteq.finance.budget.service.jpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.veeteq.finance.budget.dto.BudgetDocumentDTO;
@@ -26,12 +27,13 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
   }
 
   @Override
-  public void saveDocument(BudgetDocumentDTO documentDto) {
+  public BudgetDocument saveDocument(BudgetDocumentDTO documentDto) {
     LOG.info("Saving new document");
 
     BudgetDocument document = mapper.toEntity(documentDto);
 
-    budgetDocumentRepository.save(document);
+    BudgetDocument savedDocument = budgetDocumentRepository.save(document);
+    return savedDocument;
   }
 
   @Override
