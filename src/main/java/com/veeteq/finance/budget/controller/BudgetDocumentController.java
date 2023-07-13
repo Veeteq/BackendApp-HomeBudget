@@ -1,9 +1,10 @@
 package com.veeteq.finance.budget.controller;
 
-import com.veeteq.finance.budget.dto.BankStatementDetailDTO;
-import com.veeteq.finance.budget.dto.BudgetDocumentDTO;
-import com.veeteq.finance.budget.integration.bankdocumentmngr.BankDocumentMngrAPIClient;
-import com.veeteq.finance.budget.service.BudgetDocumentService;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.validation.Valid;
+import com.veeteq.finance.budget.dto.BankStatementInfoDTO;
+import com.veeteq.finance.budget.dto.BudgetDocumentDTO;
+import com.veeteq.finance.budget.integration.bankdocumentmngr.BankDocumentMngrAPIClient;
+import com.veeteq.finance.budget.service.BudgetDocumentService;
 
 @RestController
 @RequestMapping(path = "/api/documents")
@@ -63,13 +73,13 @@ public class BudgetDocumentController {
     }
 
     @GetMapping(path = "/bankstatements")
-    public ResponseEntity<List<BankStatementDetailDTO>> getBankStatementsByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    public ResponseEntity<List<BankStatementInfoDTO>> getBankStatementsByDate(@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         if (date == null) {
             date = LocalDate.now();
         }
         LOG.info("Requesting bank statement details from BankDocument Manager for: " + date);
 
-        List<BankStatementDetailDTO> response = bankDocumentMngrClient.getBankStatementDetailsByDate(date);
+        List<BankStatementInfoDTO> response = bankDocumentMngrClient.getBankStatementDetailsByDate(date);
         return ResponseEntity.ok(response);
     }
 }
