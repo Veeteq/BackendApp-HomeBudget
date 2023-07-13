@@ -57,3 +57,33 @@ create table document_items (
 CREATE UNIQUE INDEX document_items_pk ON document_items(ditm_id);
 ALTER TABLE document_items ADD CONSTRAINT document_items_pk PRIMARY KEY(ditm_id);
 alter table document_items add constraint document_fk foreign key(docu_id) references documents(docu_id);
+
+create table expenses (
+  expe_id bigint not null,
+  oper_dt      date not null,
+  item_id      bigint not null,        
+  user_id      bigint not null,
+  expe_item_cn decimal(10,3), 
+  expe_pric_am decimal(10,2), 
+  expe_comm_tx varchar2(255), 
+  docu_id      bigint,        
+  bank_stmt_id bigint,        
+  crea_dt      timestamp,  
+  updt_dt      timestamp,  
+  vers_nm      int
+);
+
+create table incomes (
+  inco_id      bigint not null,
+  oper_dt      date not null,
+  item_id      bigint not null,        
+  user_id      bigint not null,
+  inco_item_cn decimal(10,3), 
+  inco_pric_am decimal(10,2), 
+  inco_comm_tx varchar2(255), 
+  docu_id      bigint,        
+  bank_stmt_id bigint,        
+  crea_dt      timestamp,  
+  updt_dt      timestamp,  
+  vers_nm      int
+);

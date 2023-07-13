@@ -3,6 +3,7 @@ package com.veeteq.finance.budget.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -10,6 +11,7 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +19,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -69,6 +72,12 @@ public abstract class BudgetDocument<T> extends BaseEntity<BudgetDocument<T>> {
   @Column(name = "curr_rate_am", columnDefinition = "number(10, 6) default 1 not null", nullable = false)
   private BigDecimal currencyRate = BigDecimal.ONE;
 
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
+  private List<Expense> expenses;
+
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
+  private List<Income> incomes;
+
   public BudgetDocument() {}
 
   protected BudgetDocument(BudgetDocumentBuilder builder) {
@@ -80,53 +89,6 @@ public abstract class BudgetDocument<T> extends BaseEntity<BudgetDocument<T>> {
       this.paymentMethod = builder.getPaymentMethod();
       this.currency = builder.getCurrency();
       this.currencyRate = builder.getCurrencyRate();
-  }
-
-  public abstract static class Builder<T extends Builder<T>> {
-    private Long id;
-    private LocalDate documentDate;
-    private DocumentType documentType;
-    private Account account;
-    private PaymentMethod paymentMethod;
-    private Currency currency;
-    private BigDecimal currencyRate;
-
-
-    Builder() {}
-
-    public T withId(Long id) {
-      this.id = id;
-      return self();
-    }
-
-    public T withDocumentDate(LocalDate documentDate) {
-      this.documentDate = documentDate;
-      return self();
-    }
-
-    public T withAccount(Account account) {
-      this.account = account;
-      return self();
-    }
-
-    public T withPaymentMethod(PaymentMethod paymentMethod) {
-      this.paymentMethod = paymentMethod;
-      return self();
-    }
-
-    public T withCurrency(Currency currency) {
-      this.currency = currency;
-      return self();
-    }
-
-    public T withCurrencyRate(BigDecimal currencyRate) {
-      this.currencyRate = currencyRate;
-      return self();
-    }
-
-    public abstract BudgetDocument build();
-
-    protected abstract T self();
   }
 
 }
