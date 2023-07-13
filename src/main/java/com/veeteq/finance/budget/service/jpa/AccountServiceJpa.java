@@ -33,6 +33,11 @@ public class AccountServiceJpa implements AccountService {
     }
 
     @Override
+    public long count() {
+        return accountRepository.count();
+    }
+
+    @Override
     public List<AccountDTO> getAccounts() {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         List<AccountDTO> result = accountRepository.findAll(sort).stream()

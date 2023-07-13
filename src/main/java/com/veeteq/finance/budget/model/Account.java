@@ -48,7 +48,7 @@ public class Account extends NamedEntity<Account>{
     public static class Builder {
         private Long id;
         private String name;
-        
+
         public Builder id(Long id) {
             this.id = id;
             return this;

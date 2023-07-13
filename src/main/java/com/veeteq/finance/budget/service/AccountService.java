@@ -11,4 +11,6 @@ public interface AccountService {
   Account save(Account user);
 
   AccountDTO getAccountById(Long id);
+
+  long count();
 }

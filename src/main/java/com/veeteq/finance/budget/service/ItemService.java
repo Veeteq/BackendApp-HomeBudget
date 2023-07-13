@@ -16,4 +16,6 @@ public interface ItemService {
   PageResponse<ItemDTO> findAll(PageRequest pageRequest);
 
   List<ItemDTO> findByName(String name);
+
+  long count();
 }

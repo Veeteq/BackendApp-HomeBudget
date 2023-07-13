@@ -25,4 +25,9 @@ public class CategoryServiceJpa implements CategoryService {
   public Category save(Category category) {
     return categoryRepository.save(category);
   }
+
+  @Override
+  public long count() {
+    return categoryRepository.count();
+  }
 }
