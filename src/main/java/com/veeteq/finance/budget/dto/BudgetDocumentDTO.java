@@ -3,6 +3,7 @@ package com.veeteq.finance.budget.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,9 @@ public class BudgetDocumentDTO {
 
     @NotNull
     private Long accountId;
+
+    @NotEmpty
+    private List<BudgetDocumentItemDTO> items;
 
     private String invoiceNumber;
 
