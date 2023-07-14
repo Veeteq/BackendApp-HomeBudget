@@ -37,6 +37,7 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
   }
 
   @Override
+  @Modifying
   public void updateDocument(BudgetDocumentDTO document, Long id) {
     LOG.info("Updating existing document with id: " + id);
   }
