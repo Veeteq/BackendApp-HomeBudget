@@ -8,7 +8,7 @@ import com.veeteq.finance.budget.model.builder.InvoiceBuilder;
 
 @Entity
 @DiscriminatorValue("INVOICE")
-public final class Invoice extends BudgetDocument<Invoice> {
+public final class Invoice extends BudgetDocument {
   private static final long serialVersionUID = 1L;
 
   @Column(name = "cprt_id")

@@ -39,7 +39,7 @@ import com.veeteq.finance.budget.model.builder.BudgetDocumentBuilder;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
                      name = "docu_type_tx")
-public abstract class BudgetDocument<T> extends BaseEntity<BudgetDocument<T>> {
+public abstract class BudgetDocument extends BaseEntity<BudgetDocument> {
   private static final long serialVersionUID = 1L;
 
   @Id
@@ -80,7 +80,7 @@ public abstract class BudgetDocument<T> extends BaseEntity<BudgetDocument<T>> {
 
   public BudgetDocument() {}
 
-  protected BudgetDocument(BudgetDocumentBuilder builder) {
+  protected BudgetDocument(BudgetDocumentBuilder<?,?> builder) {
       this.id = builder.getId();
       this.documentDate = builder.getDocumentDate();
       this.documentType = builder.getDocumentType();
