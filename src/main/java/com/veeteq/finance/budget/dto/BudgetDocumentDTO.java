@@ -35,6 +35,7 @@ public class BudgetDocumentDTO {
 
     private Long bankStatementId;
 
+    private CounterpartyInfoDTO counterparty;
 
     private String invoiceNumber;
 
@@ -143,6 +144,15 @@ public class BudgetDocumentDTO {
 
     public BudgetDocumentDTO setBankStatementId(Long bankStatementId) {
         this.bankStatementId = bankStatementId;
+        return this;
+    }
+
+    public CounterpartyInfoDTO getCounterparty() {
+        return counterparty;
+    }
+
+    public BudgetDocumentDTO setCounterparty(CounterpartyInfoDTO counterparty) {
+        this.counterparty = counterparty;
         return this;
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityNotFoundException;
 
 @Component
-public class BudgetDocumentMapper<T> {
+public class BudgetDocumentMapper {
 
   private final AccountRepository accountRepository;
   private final ItemRepository itemRepository;

@@ -1,7 +1,9 @@
 package com.veeteq.finance.budget.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -25,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.veeteq.finance.budget.dto.BankStatementInfoDTO;
 import com.veeteq.finance.budget.dto.BudgetDocumentDTO;
+import com.veeteq.finance.budget.dto.CounterpartyInfoDTO;
 import com.veeteq.finance.budget.integration.bankdocumentmngr.BankDocumentMngrAPIClient;
+import com.veeteq.finance.budget.integration.counterpartymngr.CounterpartyManagerAPIClient;
 import com.veeteq.finance.budget.service.BudgetDocumentService;
 
 @RestController
@@ -36,11 +40,15 @@ public class BudgetDocumentController {
 
     private final BudgetDocumentService budgetDocumentService;
     private final BankDocumentMngrAPIClient bankDocumentMngrClient;
+    private final CounterpartyManagerAPIClient counterpartyMngrClient;
 
     @Autowired
-    public BudgetDocumentController(BudgetDocumentService budgetDocumentService, BankDocumentMngrAPIClient bankDocumentMngrClient) {
+    public BudgetDocumentController(BudgetDocumentService budgetDocumentService,
+                                    BankDocumentMngrAPIClient bankDocumentMngrClient,
+                                    CounterpartyManagerAPIClient counterpartyMngrClient) {
         this.budgetDocumentService = budgetDocumentService;
         this.bankDocumentMngrClient = bankDocumentMngrClient;
+        this.counterpartyMngrClient = counterpartyMngrClient;
     }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -80,6 +88,19 @@ public class BudgetDocumentController {
         LOG.info("Requesting bank statement details from BankDocument Manager for: " + date);
 
         List<BankStatementInfoDTO> response = bankDocumentMngrClient.getBankStatementDetailsByDate(date);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(path = "/counterparties")
+    public ResponseEntity<List<CounterpartyInfoDTO>> getCounterpartiesByText(@RequestParam(name = "searchText", required = true) String searchText) {
+        LOG.info("Requesting counterparties search from Counterparty Manager for: " + searchText);
+
+        Map<String, String> searchParams = new HashMap<>();
+        String[] searchAttributes = {"name", "iban", "taxId"};
+        for (String key : searchAttributes) {
+            searchParams.put(key, searchText);
+        }
+        List<CounterpartyInfoDTO> response = counterpartyMngrClient.getCounterpartiesByText(searchParams);
         return ResponseEntity.ok(response);
     }
 }
