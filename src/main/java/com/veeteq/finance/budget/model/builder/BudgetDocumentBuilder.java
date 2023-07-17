@@ -5,13 +5,13 @@ import java.time.LocalDate;
 import java.util.Currency;
 
 import com.veeteq.finance.budget.model.Account;
-import com.veeteq.finance.budget.model.DocumentType;
+import com.veeteq.finance.budget.model.BudgetDocumentType;
 import com.veeteq.finance.budget.model.PaymentMethod;
 
 public abstract class BudgetDocumentBuilder<T, R> {
     private Long id;
     private LocalDate documentDate;
-    private DocumentType documentType;
+    private BudgetDocumentType documentType;
     private String documentTitle;
     private Account account;
     private PaymentMethod paymentMethod;
@@ -57,7 +57,7 @@ public abstract class BudgetDocumentBuilder<T, R> {
         return documentDate;
     }
 
-    public DocumentType getDocumentType() {
+    public BudgetDocumentType getDocumentType() {
         return documentType;
     }
 

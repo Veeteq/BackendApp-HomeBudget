@@ -4,6 +4,7 @@ import java.util.Currency;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.veeteq.finance.budget.model.BudgetDocumentItemType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.veeteq.finance.budget.model.DocumentType;
+import com.veeteq.finance.budget.model.BudgetDocumentType;
 import com.veeteq.finance.budget.model.PaymentMethod;
 
 @RestController
@@ -40,9 +41,9 @@ public class UtilityController {
     }
 
     @GetMapping(path = "/documentTypes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DocumentType[]> getDocumentTypes() {
+    public ResponseEntity<BudgetDocumentType[]> getDocumentTypes() {
 
-        return ResponseEntity.ok(DocumentType.values());
+        return ResponseEntity.ok(BudgetDocumentType.values());
     }
 
     @GetMapping(path = "/paymentMethods", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,4 +52,9 @@ public class UtilityController {
         return ResponseEntity.ok(PaymentMethod.values());
     }
 
+    @GetMapping(path = "/documentItemTypes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BudgetDocumentItemType[]> getDocumentItemTypes() {
+
+        return ResponseEntity.ok(BudgetDocumentItemType.values());
+    }
 }

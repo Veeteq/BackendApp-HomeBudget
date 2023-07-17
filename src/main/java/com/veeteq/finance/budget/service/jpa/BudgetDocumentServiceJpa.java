@@ -12,6 +12,8 @@ import com.veeteq.finance.budget.model.BudgetDocument;
 import com.veeteq.finance.budget.repository.BudgetDocumentRepository;
 import com.veeteq.finance.budget.service.BudgetDocumentService;
 
+import javax.transaction.Transactional;
+
 @Service
 public class BudgetDocumentServiceJpa implements BudgetDocumentService {
   private static final Logger LOG = LoggerFactory.getLogger(BudgetDocumentServiceJpa.class);
@@ -27,6 +29,7 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
   }
 
   @Override
+  @Transactional
   public BudgetDocument saveDocument(BudgetDocumentDTO documentDto) {
     LOG.info("Saving new document");
 

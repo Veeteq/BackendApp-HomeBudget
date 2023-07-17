@@ -45,7 +45,7 @@ CREATE UNIQUE INDEX documents_pk ON documents(docu_id);
 ALTER TABLE documents ADD CONSTRAINT documents_pk PRIMARY KEY (docu_id);
 ALTER TABLE documents ADD CONSTRAINT accounts_fk FOREIGN KEY (acco_id) REFERENCES users(user_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
 CREATE SEQUENCE docu_seq start with 1 increment by 1;
-
+/*
 create table document_items (
   ditm_id      bigint not null,
   ditm_dt      date not null,
@@ -57,6 +57,7 @@ create table document_items (
 CREATE UNIQUE INDEX document_items_pk ON document_items(ditm_id);
 ALTER TABLE document_items ADD CONSTRAINT document_items_pk PRIMARY KEY(ditm_id);
 alter table document_items add constraint document_fk foreign key(docu_id) references documents(docu_id);
+*/
 
 create table expenses (
   expe_id bigint not null,
@@ -72,6 +73,7 @@ create table expenses (
   updt_dt      timestamp,  
   vers_nm      int
 );
+CREATE SEQUENCE expe_seq start with 1 increment by 1;
 
 create table incomes (
   inco_id      bigint not null,
@@ -87,3 +89,4 @@ create table incomes (
   updt_dt      timestamp,  
   vers_nm      int
 );
+CREATE SEQUENCE inco_seq start with 1 increment by 1;

@@ -49,7 +49,7 @@ public class BudgetDocumentController {
 
         budgetDocumentService.saveDocument(document);
 
-        return null;
+        return ResponseEntity.ok("ok");
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

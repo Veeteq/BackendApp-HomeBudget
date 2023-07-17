@@ -18,4 +18,21 @@ public class Income extends BudgetDocumentItem {
     @JoinColumn(name = "docu_id", referencedColumnName = "docu_id")
     private BudgetDocument document;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Income setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public BudgetDocument getDocument() {
+        return document;
+    }
+
+    public Income setDocument(BudgetDocument document) {
+        this.document = document;
+        return this;
+    }
 }

@@ -1,64 +1,69 @@
 package com.veeteq.finance.budget.dto;
 
-import com.veeteq.finance.budget.model.DocumentType;
-
 import java.math.BigDecimal;
+
+import com.veeteq.finance.budget.model.BudgetDocumentItemType;
 
 public class BudgetDocumentItemDTO {
 
-	private Long id;
-	private Long itemId;
-	private DocumentType type;
-	private BigDecimal count;
-	private BigDecimal price;
-	private String comment;
+  private Long id;
+  private ItemDTO product;
+  private BudgetDocumentItemType type;
+  private BigDecimal count;
+  private BigDecimal price;
+  private String comment;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public BudgetDocumentItemDTO setId(Long id) {
+    this.id = id;
+    return this;
+  }
 
-	public Long getItemId() {
-		return itemId;
-	}
+  public ItemDTO getProduct() {
+    return product;
+  }
 
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
-	}
+  public BudgetDocumentItemDTO setProduct(ItemDTO product) {
+    this.product = product;
+    return this;
+  }
 
-	public DocumentType getType() {
-		return type;
-	}
+  public BudgetDocumentItemType getType() {
+    return type;
+  }
 
-	public void setType(DocumentType type) {
-		this.type = type;
-	}
+  public BudgetDocumentItemDTO setType(BudgetDocumentItemType type) {
+    this.type = type;
+    return this;
+  }
 
-	public BigDecimal getCount() {
-		return count;
-	}
+  public BigDecimal getCount() {
+    return count;
+  }
 
-	public void setCount(BigDecimal count) {
-		this.count = count;
-	}
+  public BudgetDocumentItemDTO setCount(BigDecimal count) {
+    this.count = count;
+    return this;
+  }
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+  public BigDecimal getPrice() {
+    return price;
+  }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+  public BudgetDocumentItemDTO setPrice(BigDecimal price) {
+    this.price = price;
+    return this;
+  }
 
-	public String getComment() {
-		return comment;
-	}
+  public String getComment() {
+    return comment;
+  }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
+  public BudgetDocumentItemDTO setComment(String comment) {
+    this.comment = comment;
+    return this;
+  }
 }

@@ -3,8 +3,10 @@ package com.veeteq.finance.budget.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -53,7 +55,7 @@ public abstract class BudgetDocument extends BaseEntity<BudgetDocument> {
 
   @Enumerated(EnumType.STRING)
   @Column(name="docu_type_tx", insertable = false, updatable = false)
-  private DocumentType documentType;
+  private BudgetDocumentType documentType;
 
   @Column(name = "docu_name_tx")
   private String documentTitle;
@@ -72,13 +74,66 @@ public abstract class BudgetDocument extends BaseEntity<BudgetDocument> {
   @Column(name = "curr_rate_am", columnDefinition = "number(10, 6) default 1 not null", nullable = false)
   private BigDecimal currencyRate = BigDecimal.ONE;
 
-  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
-  private List<Expense> expenses;
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  private List<Expense> expenses = new LinkedList<>();
 
-  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
-  private List<Income> incomes;
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+  private List<Income> incomes = new LinkedList<>();
 
   public BudgetDocument() {}
+
+  public void addToDocumentItems(BudgetDocumentItem item) {
+    if (item instanceof Expense expense) {
+      System.out.println("adding expense");
+      expense.setDocument(this);
+      expenses.add(expense);
+    }
+    if (item instanceof Income income) {
+      System.out.println("adding income");
+      income.setDocument(this);
+      incomes.add(income);
+    }
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public LocalDate getDocumentDate() {
+    return documentDate;
+  }
+
+  public BudgetDocumentType getDocumentType() {
+    return documentType;
+  }
+
+  public String getDocumentTitle() {
+    return documentTitle;
+  }
+
+  public Account getAccount() {
+    return account;
+  }
+
+  public PaymentMethod getPaymentMethod() {
+    return paymentMethod;
+  }
+
+  public Currency getCurrency() {
+    return currency;
+  }
+
+  public BigDecimal getCurrencyRate() {
+    return currencyRate;
+  }
+
+  public List<Expense> getExpenses() {
+    return expenses;
+  }
+
+  public List<Income> getIncomes() {
+    return incomes;
+  }
 
   protected BudgetDocument(BudgetDocumentBuilder<?,?> builder) {
       this.id = builder.getId();
