@@ -8,7 +8,7 @@ import com.veeteq.finance.budget.model.builder.NoteBuilder;
 
 @Entity
 @DiscriminatorValue("NOTE")
-public final class Note extends BudgetDocument<Note> {
+public final class Note extends BudgetDocument {
   private static final long serialVersionUID = 1L;
 
   @Column(name = "cprt_id")

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BudgetDocumentMapper<T> {
+public class BudgetDocumentMapper {
 
   private final AccountRepository accountRepository;
 
@@ -31,7 +31,7 @@ public class BudgetDocumentMapper<T> {
     return entity;
   }
 
-  private BudgetDocument<Bill> createBill(BudgetDocumentDTO dto) {
+  private Bill createBill(BudgetDocumentDTO dto) {
     Long accountId = dto.getAccountId();
     Account account = accountRepository.getReferenceById(accountId);
 
@@ -47,7 +47,7 @@ public class BudgetDocumentMapper<T> {
     return bill;
   }
 
-  private BudgetDocument<Note> createNote(BudgetDocumentDTO dto) {
+  private Note createNote(BudgetDocumentDTO dto) {
     Long accountId = dto.getAccountId();
     Account account = accountRepository.getReferenceById(accountId);
 
@@ -64,7 +64,7 @@ public class BudgetDocumentMapper<T> {
     return note;
   }
 
-  private BudgetDocument<Invoice> createInvoice(BudgetDocumentDTO dto) {
+  private Invoice createInvoice(BudgetDocumentDTO dto) {
     Long accountId = dto.getAccountId();
     Account account = accountRepository.getReferenceById(accountId);
 
