@@ -1,8 +1,8 @@
 package com.veeteq.finance.budget.dto;
 
-import java.math.BigDecimal;
-
 import com.veeteq.finance.budget.model.BudgetDocumentItemType;
+
+import java.math.BigDecimal;
 
 public class BudgetDocumentItemDTO {
 
