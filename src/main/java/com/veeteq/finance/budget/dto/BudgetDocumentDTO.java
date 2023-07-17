@@ -3,34 +3,38 @@ package com.veeteq.finance.budget.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import com.veeteq.finance.budget.model.DocumentType;
+import com.veeteq.finance.budget.model.BudgetDocumentType;
 import com.veeteq.finance.budget.model.PaymentMethod;
 
 public class BudgetDocumentDTO {
     private Long id;
     
-    @NotNull
-    private DocumentType documentType;
+    @NotNull(message = "Document type is required")
+    private BudgetDocumentType documentType;
     
-    @NotNull
+    @NotNull(message = "Document date is required")
     private LocalDate documentDate;
     
-    @NotEmpty
+    @NotNull(message = "Document title is required")
     private String documentTitle;
 
-    @NotNull
+    @NotNull(message = "Payment method is required")
     private PaymentMethod paymentMethod;
 
-    @NotNull
+    @NotNull(message = "Account is required")
     private Long accountId;
 
-    @NotEmpty
-    private List<BudgetDocumentItemDTO> items;
+    @NotEmpty(message = "At least one item is required")
+    private List<BudgetDocumentItemDTO> items = new LinkedList<>();
+
+    private Long bankStatementId;
+
 
     private String invoiceNumber;
 
@@ -48,11 +52,11 @@ public class BudgetDocumentDTO {
         this.id = id;
     }
 
-    public DocumentType getDocumentType() {
+    public BudgetDocumentType getDocumentType() {
         return documentType;
     }
 
-    public void setDocumentType(DocumentType documentType) {
+    public void setDocumentType(BudgetDocumentType documentType) {
         this.documentType = documentType;
     }
 
@@ -120,4 +124,25 @@ public class BudgetDocumentDTO {
         this.exchangeRate = exchangeRate;
     }
 
+    public List<BudgetDocumentItemDTO> getItems() {
+        return items;
+    }
+
+    public BudgetDocumentDTO setItems(List<BudgetDocumentItemDTO> items) {
+        this.items = items;
+        return this;
+    }
+
+    public void addToItems(BudgetDocumentItemDTO item) {
+        items.add(item);
+    }
+
+    public Long getBankStatementId() {
+        return bankStatementId;
+    }
+
+    public BudgetDocumentDTO setBankStatementId(Long bankStatementId) {
+        this.bankStatementId = bankStatementId;
+        return this;
+    }
 }

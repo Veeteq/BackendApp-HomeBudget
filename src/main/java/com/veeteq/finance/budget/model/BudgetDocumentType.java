@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum DocumentType {
+public enum BudgetDocumentType {
 
     TRANSFER("Transfer"),
     NOTE("Note"),
@@ -14,7 +14,7 @@ public enum DocumentType {
     
     private final String value;
     
-    private DocumentType(String value) {
+    private BudgetDocumentType(String value) {
         this.value = value;
     }
 
@@ -24,8 +24,8 @@ public enum DocumentType {
     }
 
     @JsonCreator
-    public DocumentType findByValue(String value) {
-        return Stream.of(DocumentType.values())
+    public BudgetDocumentType findByValue(String value) {
+        return Stream.of(BudgetDocumentType.values())
         .filter(el -> el.value.equals(value))
         .findFirst()
         .orElseThrow(() -> new IllegalArgumentException());
