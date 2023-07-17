@@ -7,7 +7,7 @@ import com.veeteq.finance.budget.model.builder.BillBuilder;
 
 @Entity
 @DiscriminatorValue("BILL")
-public final class Bill extends BudgetDocument<Bill> {
+public final class Bill extends BudgetDocument {
   private static final long serialVersionUID = 1L;
 
   public Bill() {}

@@ -44,7 +44,7 @@ public class BudgetDocumentMapper<T> {
     return entity;
   }
 
-  private BudgetDocument<Bill> createBill(BudgetDocumentDTO dto) {
+  private BudgetDocument createBill(BudgetDocumentDTO dto) {
     Account account = getAccountById(dto.getAccountId());
 
     Bill bill = Bill.builder()
@@ -59,7 +59,7 @@ public class BudgetDocumentMapper<T> {
     return bill;
   }
 
-  private BudgetDocument<Note> createNote(BudgetDocumentDTO dto) {
+  private BudgetDocument createNote(BudgetDocumentDTO dto) {
     Account account = getAccountById(dto.getAccountId());
 
     Note note = Note.builder()
@@ -75,7 +75,7 @@ public class BudgetDocumentMapper<T> {
     return note;
   }
 
-  private BudgetDocument<Invoice> createInvoice(BudgetDocumentDTO dto) {
+  private BudgetDocument createInvoice(BudgetDocumentDTO dto) {
     Account account = getAccountById(dto.getAccountId());
 
     Invoice invoice = Invoice.builder()
