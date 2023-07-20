@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import com.veeteq.finance.budget.service.AccountService;
 @RequestMapping(path = "/api/accounts")
 @CrossOrigin(origins = "http://localhost:4203")
 public class AccountController {
+  private static final Logger LOG = LoggerFactory.getLogger(AccountController.class);
 
   private final AccountService accountService;
 
@@ -32,6 +35,8 @@ public class AccountController {
 
   @GetMapping(path = {"", "/"}, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<AccountDTO>> getAccounts() {
+    LOG.info("Processing GET request for all Accounts");
+
     List<AccountDTO> accounts = accountService.getAccounts();
     return ResponseEntity.ok(accounts);
   }
@@ -39,6 +44,7 @@ public class AccountController {
   @GetMapping("/{id}")
   @Cacheable(value = "accounts", key = "#id")
   public ResponseEntity<AccountDTO> getAccountById(@PathVariable Long id, HttpServletRequest request) {
+    LOG.info("Processing GET request for single Account by id: " + id);
 
     AccountDTO account = accountService.getAccountById(id);
 

@@ -103,4 +103,12 @@ public class BudgetDocumentController {
         List<CounterpartyInfoDTO> response = counterpartyMngrClient.getCounterpartiesByText(searchParams);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping(path = "/counterparties/{id}")
+    public ResponseEntity<CounterpartyInfoDTO> getCounterpartyById(@PathVariable("id") Long id) {
+        LOG.info("Requesting search for Counterparty by id: " + id);
+
+        CounterpartyInfoDTO response = counterpartyMngrClient.getCounterpartyById(id);
+        return ResponseEntity.ok(response);
+    }
 }
