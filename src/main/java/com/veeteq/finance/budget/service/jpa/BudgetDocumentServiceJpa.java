@@ -32,13 +32,15 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
 
   @Override
   @Transactional
-  public BudgetDocument saveDocument(BudgetDocumentDTO documentDto) {
+  public BudgetDocumentDTO saveDocument(BudgetDocumentDTO documentDto) {
     LOG.info("Saving new document");
 
     BudgetDocument document = mapper.toEntity(documentDto);
 
     BudgetDocument savedDocument = budgetDocumentRepository.save(document);
-    return savedDocument;
+
+    BudgetDocumentDTO result = mapper.toDto(savedDocument);
+    return result;
   }
 
   @Override

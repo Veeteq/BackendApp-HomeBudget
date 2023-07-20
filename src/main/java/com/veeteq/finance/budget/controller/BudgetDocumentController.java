@@ -52,12 +52,12 @@ public class BudgetDocumentController {
     }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> saveDocument(@Valid @RequestBody(required = true) BudgetDocumentDTO document) {
+    public ResponseEntity<BudgetDocumentDTO> saveDocument(@Valid @RequestBody(required = true) BudgetDocumentDTO document) {
         LOG.info("Start processing POST request: " + document.getDocumentTitle());
 
-        budgetDocumentService.saveDocument(document);
+        BudgetDocumentDTO savedDocument = budgetDocumentService.saveDocument(document);
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok(savedDocument);
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
