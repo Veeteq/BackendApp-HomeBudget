@@ -12,6 +12,8 @@ import com.veeteq.finance.budget.model.BudgetDocument;
 import com.veeteq.finance.budget.repository.BudgetDocumentRepository;
 import com.veeteq.finance.budget.service.BudgetDocumentService;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 @Service
@@ -52,6 +54,11 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
     BudgetDocument savedDocument = budgetDocumentRepository.getReferenceById(id);
 
     budgetDocumentRepository.delete(savedDocument);
+  }
+
+  @Override
+  public List<String> getDocumentTitlesWithPattern(String pattern) {
+    return budgetDocumentRepository.findDistinctByDocumentTitleContainingIgnoreCase(pattern);
   }
 
 }
