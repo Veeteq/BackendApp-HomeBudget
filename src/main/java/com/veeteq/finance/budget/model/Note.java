@@ -21,6 +21,10 @@ public final class Note extends BudgetDocument {
     this.counterpartyId = builder.getCounterpartyId();
   }
 
+  public Long getCounterpartyId() {
+    return counterpartyId;
+  }
+
   public static NoteBuilder builder() {
     return new NoteBuilder();
   }

@@ -44,6 +44,20 @@ public class BudgetDocumentMapper {
     return entity;
   }
 
+  public BudgetDocumentDTO toDto(BudgetDocument entity) {
+    if (entity == null) {
+      return null;
+    }
+
+    BudgetDocumentDTO dto = switch (entity.getDocumentType() ) {
+      case NOTE -> fromNote(entity);
+      case BILL -> fromBill(entity);
+      case INVOICE -> fromInvoice(entity);
+      case TRANSFER -> throw new UnsupportedOperationException("Not implemented yet");
+    };
+    return dto;
+  }
+
   private BudgetDocument createBill(BudgetDocumentDTO dto) {
     Account account = getAccountById(dto.getAccountId());
 
@@ -55,6 +69,8 @@ public class BudgetDocumentMapper {
             .withPaymentMethod(dto.getPaymentMethod())
             .withCurrency(dto.getCurrency())
             .withCurrencyRate(dto.getExchangeRate())
+            .withCounterpartyId(dto.getCounterpartyInfo().getId())
+            .withBankStatementDetailId(dto.getBankStatementDetailId())
             .build();
     return bill;
   }
@@ -65,6 +81,7 @@ public class BudgetDocumentMapper {
     Note note = Note.builder()
             .withId(dto.getId())
             .withDocumentDate(dto.getDocumentDate())
+            .withDocumentTitle(dto.getDocumentTitle())
             .withAccount(account)
             .withPaymentMethod(dto.getPaymentMethod())
             .withCurrency(dto.getCurrency())
@@ -81,6 +98,7 @@ public class BudgetDocumentMapper {
     Invoice invoice = Invoice.builder()
             .withId(dto.getId())
             .withDocumentDate(dto.getDocumentDate())
+            .withDocumentTitle(dto.getDocumentTitle())
             .withAccount(account)
             .withPaymentMethod(dto.getPaymentMethod())
             .withCurrency(dto.getCurrency())
@@ -121,8 +139,45 @@ public class BudgetDocumentMapper {
     return income;
   }
 
+  private BudgetDocumentDTO fromNote(BudgetDocument entity) {
+    Note note = (Note) entity;
+    BudgetDocumentDTO dto = fromCommon(entity)
+            .setCounterpartyId(note.getCounterpartyId());
+    return dto;
+  }
+
+  private BudgetDocumentDTO fromBill(BudgetDocument entity) {
+    Bill bill = (Bill) entity;
+    BudgetDocumentDTO dto = fromCommon(entity)
+            .setCounterpartyId(bill.getCounterpartyId())
+            .setBankStatementDetailId(bill.getBankStatementDetailId());
+    return dto;
+  }
+
+  private BudgetDocumentDTO fromInvoice(BudgetDocument entity) {
+    Invoice invoice = (Invoice) entity;
+    BudgetDocumentDTO dto = fromCommon(entity)
+            .setCounterpartyId(invoice.getCounterpartyId())
+            .setBankStatementDetailId(invoice.getBankStatementDetailId())
+            .setInvoiceNumber(invoice.getInvoiceNumber());
+    return dto;
+  }
+
   private BudgetDocument createTransfer(BudgetDocumentDTO dto) {
     return null;
+  }
+
+  private BudgetDocumentDTO fromCommon(BudgetDocument entity) {
+    BudgetDocumentDTO dto = new BudgetDocumentDTO()
+            .setId(entity.getId())
+            .setDocumentDate(entity.getDocumentDate())
+            .setDocumentTitle(entity.getDocumentTitle())
+            .setDocumentType(entity.getDocumentType())
+            .setPaymentMethod(entity.getPaymentMethod())
+            .setAccountId(entity.getAccount().getId())
+            .setCurrency(entity.getCurrency())
+            .setExchangeRate(entity.getCurrencyRate());
+    return dto;
   }
 
   private Account getAccountById(Long accountId) {
@@ -140,4 +195,5 @@ public class BudgetDocumentMapper {
     }
     return item;
   }
+
 }
