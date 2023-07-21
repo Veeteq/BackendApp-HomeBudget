@@ -51,6 +51,15 @@ public class BudgetDocumentController {
         this.counterpartyMngrClient = counterpartyMngrClient;
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<BudgetDocumentDTO> getDocumentById(@PathVariable("id") Long id) {
+        LOG.info("Start processing GET request with id: " + id);
+
+        BudgetDocumentDTO savedDocument = budgetDocumentService.getDocumentById(id);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BudgetDocumentDTO> saveDocument(@Valid @RequestBody(required = true) BudgetDocumentDTO document) {
         LOG.info("Start processing POST request: " + document.getDocumentTitle());

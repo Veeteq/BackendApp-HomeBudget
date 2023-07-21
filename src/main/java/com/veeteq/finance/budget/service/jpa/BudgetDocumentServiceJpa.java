@@ -14,6 +14,7 @@ import com.veeteq.finance.budget.service.BudgetDocumentService;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 @Service
@@ -31,6 +32,14 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
   }
 
   @Override
+  public BudgetDocumentDTO getDocumentById(Long id) {
+    BudgetDocument savedDocument = budgetDocumentRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(String.format("Document with id %s not found", id)));
+    BudgetDocumentDTO result = mapper.toDto(savedDocument);
+    return result;
+  }
+
+  @Override
   @Transactional
   public BudgetDocumentDTO saveDocument(BudgetDocumentDTO documentDto) {
     LOG.info("Saving new document");
@@ -39,8 +48,13 @@ public class BudgetDocumentServiceJpa implements BudgetDocumentService {
 
     BudgetDocument savedDocument = budgetDocumentRepository.save(document);
 
-    BudgetDocumentDTO result = mapper.toDto(savedDocument);
-    return result;
+    /**
+     * Return instance of new BudgetDocumentDTO
+     * with the same date
+     */
+    BudgetDocumentDTO newDocument = new BudgetDocumentDTO()
+            .setDocumentDate(savedDocument.getDocumentDate());
+    return newDocument;
   }
 
   @Override
