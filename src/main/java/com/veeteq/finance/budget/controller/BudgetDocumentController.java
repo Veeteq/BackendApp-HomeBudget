@@ -56,8 +56,8 @@ public class BudgetDocumentController {
         LOG.info("Start processing GET request with id: " + id);
 
         BudgetDocumentDTO savedDocument = budgetDocumentService.getDocumentById(id);
-
-        return ResponseEntity.ok().build();
+        
+        return ResponseEntity.ok(savedDocument);
     }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
