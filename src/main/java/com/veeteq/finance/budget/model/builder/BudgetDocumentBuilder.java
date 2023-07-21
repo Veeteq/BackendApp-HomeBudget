@@ -23,6 +23,11 @@ public abstract class BudgetDocumentBuilder<T, R> {
         return self();
     }
 
+    public T withDocumentType(BudgetDocumentType documentType) {
+        this.documentType = documentType;
+        return self();
+    }
+
     public T withDocumentDate(LocalDate documentDate) {
         this.documentDate = documentDate;
         return self();

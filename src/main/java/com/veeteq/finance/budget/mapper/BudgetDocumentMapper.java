@@ -63,6 +63,7 @@ public class BudgetDocumentMapper {
 
     Bill bill = Bill.builder()
             .withId(dto.getId())
+            .withDocumentType(dto.getDocumentType())
             .withDocumentDate(dto.getDocumentDate())
             .withDocumentTitle(dto.getDocumentTitle())
             .withAccount(account)
@@ -80,6 +81,7 @@ public class BudgetDocumentMapper {
 
     Note note = Note.builder()
             .withId(dto.getId())
+            .withDocumentType(dto.getDocumentType())
             .withDocumentDate(dto.getDocumentDate())
             .withDocumentTitle(dto.getDocumentTitle())
             .withAccount(account)
@@ -97,6 +99,7 @@ public class BudgetDocumentMapper {
 
     Invoice invoice = Invoice.builder()
             .withId(dto.getId())
+            .withDocumentType(dto.getDocumentType())
             .withDocumentDate(dto.getDocumentDate())
             .withDocumentTitle(dto.getDocumentTitle())
             .withAccount(account)
